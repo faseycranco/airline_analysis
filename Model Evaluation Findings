@@ -1,0 +1,29 @@
+Model Evaluation Findings
+
+Based on the above tests, the model I eventually went with was a Polynomial Regression model. Running it initially on all columns that weren't determinant on already knowing Pax, I came up with an r2 score of 0.97 which seems likey to be a factor of overfitting.
+
+I then ran recursive feature elimination to minimize the number of independant variables needed for a prediction.
+
+What I found was that I could achive an r2 score of 0.77 by using only 'Int_RPM' with a degree of 1. Adding the next 4 highest features (all injury related) had no effect on r2 score.
+
+This in and of itself is interesting, but I decided to try again to see if eliminating this feature would make said r2 score impossible.
+
+Strangely, eliminating 'Int_RPM' improved the overall scores. Now using the top 5 of RPM, flt_rolling_avg, Serious, NumberOfEvents, and Minor, I can get a r2 of 0.99 with a degree of 2.
+
+Using only the top 3 columns yields and r2 of 0.98 so I'm starting to suspect that RPM has a similar overfitting effect since it is the measure of paying passengers being carried a mile. I'll try eliminating it.
+
+If RPM is absent, the top 5 predictive features are Dom_ASM, during_pandemic, Total Injuries, Fatal, and Serious which yield and r2 of 0.89, but CV scores of 0.13654407 0.7873219 0.40076702 0.93019752 0.85059246 which is a pretty wide spread. Reducing the degree from 2 to 1 improved the scores to:
+
+Mean Squared Error: 8401131496419.39 R-squared: 0.92 CV Scores: [0.13654407 0.7873219 0.40076702 0.93019752 0.85059246]
+
+If I reduce that to the top 3 features of Dom_ASM, during_pandemic, and Total Injuries, the scores only don't meaningfully change and are now:
+
+Mean Squared Error: 8462548582684.90 R-squared: 0.92 CV Scores: [0.15864568 0.77822757 0.39640414 0.92945577 0.86030124]
+
+Upon further consideration, ASM would also contain elements that could be used to deduce Pax numbers so I'll eliminate that as well and try again.
+
+And this is where I think I'll stop.
+
+Therefore, given the Polynomial Regression model's scores of Mean Squared Error: 8462548582684.90, R-squared: 0.92, and CV Scores: [0.15864568, 0.77822757, 0.39640414, 0.92945577, 0.86030124], and given the input features Dom_ASM, during_pandemic, and Total Injuries, I could predict the number of Passengers with approximately 92% accuracy.
+
+However, if Dom_ASM were unavailable, using Int_LF, NumberOfEvents, Int_Flt, Month, Dom_Flt would yield a less-impressive but statistically significant r2 score of 0.79 with a MSE of 23288307747977.16 and cross variation scores of [ 0.83241679 0.44597674 -0.8331624 0.56630284 0.48873578].
