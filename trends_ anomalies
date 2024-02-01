@@ -1,0 +1,8 @@
+- Every year seems to have the same seasonal peaks and valleys even when there's overall upwards or downwards trends. 
+- Following 2020, there was a massive spike in Domestic flights compared to International flights.
+- My "significant world events" external data indicates that world events peaked in 2017 (according to their dataset, of course)
+- Pax Yearly Growth had a massive spike after 2020, presumably due to economic recovery, but did not have a similar spike after the 2008 market crash.
+- In fact, 2008 seems to barely register on many of the charts. 
+- Yearly Growth Percentage has massive numbers in its Kurtosis, STD, and coefficent of variation when compared to Pax and Flt.
+- Significant World Events is negatively Kendall correlated with both "Dom_vs_Int_Flt" and Flgihts Rolling Average.
+- The Random Forest Regression determined there was almost no predictive power between Pax and "had_holiday"
